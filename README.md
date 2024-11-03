@@ -30,7 +30,7 @@ To install this tool, you need to have Python 3.8 or above installed on your mac
 1. Clone this repository:
     ```sh
     https://github.com/AmaniToamaWebDevelp1/proxychecker.git
-    cd proxy-checker
+    cd proxychecker
     ```
 
 2. Install the required packages:
