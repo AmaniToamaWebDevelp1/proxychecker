@@ -55,12 +55,12 @@ python proxychecker.py -t path/to/proxyfile.txt
 
 Check a single proxy:
 ```sh
-python proxychecker.py -s http://10.20.200.13:80
+python proxychecker.py -s http://103.162.184.251:1088
 ```
 
 Check a single proxy with a specified protocol:
 ```sh
-python proxychecker.py -s socks5://10.20.200.13:1080 -p socks5
+python proxychecker.py -s 20.205.61.143:8123 -p socks5
 ```
 
 ### Interrupting the Process
@@ -76,17 +76,23 @@ python proxychecker.py -t proxies.txt
 
 Checking a single HTTP proxy:
 ```sh
-python proxychecker.py -s http://10.20.200.13:80
+python proxychecker.py -s http://103.162.184.251:1088
 ```
 
-Checking a single SOCKS5 proxy with auto-detection:
+Checking a single proxy with auto-detection to protocol:
 ```sh
-python proxychecker.py -s socks5://10.20.200.13:1080
+python proxychecker.py -s 20.205.61.143:8123 -p none
+```
+```sh
+python proxychecker.py -s 20.205.61.143:8123 
 ```
 
 Checking a single proxy with a specified protocol:
 ```sh
-python proxychecker.py -s 10.20.200.13:1080 -p socks5
+python proxychecker.py -s 20.205.61.143:8123 -p socks5
+```
+```sh
+python proxychecker.py -s socks5://20.205.61.143:8123 
 ```
 
 ## Contributing
