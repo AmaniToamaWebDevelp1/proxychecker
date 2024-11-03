@@ -29,7 +29,7 @@ To install this tool, you need to have Python 3.8 or above installed on your mac
 
 1. Clone this repository:
     ```sh
-    git clone https://github.com/yourusername/proxy-checker.git
+    https://github.com/AmaniToamaWebDevelp1/proxychecker.git
     cd proxy-checker
     ```
 
