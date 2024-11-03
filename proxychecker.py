@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-# Sublist3r v1.0
+# PROXY Checker v0.1.0
 # By Amani Toama amanitoama570@gmail.com
 
 # modules in standard library
@@ -19,8 +19,8 @@ def initialize():
     group.add_argument('-t', '--txt', help='Text file containing proxies, one per line.')
     group.add_argument('-s', '--single', help="Single proxy URL (e.g., http://10.20.200.13:80)", type=str)
     parser.add_argument('-p', '--protocol',
-                        help="Protocol to use with the single proxy (e.g., socks4), if you don't know the protocol type",
-                        type=str)
+                        help="Protocol to use with the single proxy (e.g., socks4), if you don't know the protocol type none",
+                        type=str, default="http")
     args = parser.parse_args()
     return args
 
@@ -29,21 +29,23 @@ def print_banner():
     print(rf"""
       {Fore.LIGHTMAGENTA_EX}
       **************************************************************************************************************
-  .______   .______        ______   ___   ___ ____    ____      ______  __    __   _______   ______  __  ___  _______ .______      
-  |   _  \  |   _  \      /  __  \  \  \ /  / \   \  /   /     /      ||  |  |  | |   ____| /      ||  |/  / |   ____||   _  \     
-  |  |_)  | |  |_)  |    |  |  |  |  \  V  /   \   \/   /     |  ,----'|  |__|  | |  |__   |  ,----'|  '  /  |  |__   |  |_)  |    
-  |   ___/  |      /     |  |  |  |   >   <     \_    _/      |  |     |   __   | |   __|  |  |     |    <   |   __|  |      /     
-  |  |      |  |\  \----.|  `--'  |  /  .  \      |  |        |  `----.|  |  |  | |  |____ |  `----.|  .  \  |  |____ |  |\  \----.
-  | _|      | _| `._____| \______/  /__/ \__\     |__|         \______||__|  |__| |_______| \______||__|\__\ |_______|| _| `._____|
-                     
-      ***************************************************************************************************************               
-                      {Style.BRIGHT + Fore.CYAN}# Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com       
-      ---------------------------------------------------------------------------------------------------------------- 
+ 
+ ________  ________  ________     ___    ___ ___    ___      ________  ___  ___  _______   ________  ___  __    _______   ________     
+|\   __  \|\   __  \|\   __  \   |\  \  /  /|\  \  /  /|    |\   ____\|\  \|\  \|\  ___ \ |\   ____\|\  \|\  \ |\  ___ \ |\   __  \    
+\ \  \|\  \ \  \|\  \ \  \|\  \  \ \  \/  / | \  \/  / /    \ \  \___|\ \  \\\  \ \   __/|\ \  \___|\ \  \/  /|\ \   __/|\ \  \|\  \   
+ \ \   ____\ \   _  _\ \  \\\  \  \ \    / / \ \    / /      \ \  \    \ \   __  \ \  \_|/_\ \  \    \ \   ___  \ \  \_|/_\ \   _  _\  
+  \ \  \___|\ \  \\  \\ \  \\\  \  /     \/   \/  /  /        \ \  \____\ \  \ \  \ \  \_|\ \ \  \____\ \  \\ \  \ \  \_|\ \ \  \\  \| 
+   \ \__\    \ \__\\ _\\ \_______\/  /\   \ __/  / /           \ \_______\ \__\ \__\ \_______\ \_______\ \__\\ \__\ \_______\ \__\\ _\ 
+    \|__|     \|__|\|__|\|_______/__/ /\ __\\___/ /             \|_______|\|__|\|__|\|_______|\|_______|\|__| \|__|\|_______|\|__|\|__|
+                                 |__|/ \|__\|___|/                                                                                     
+
+      ***************************************************************************************************************
+                      {Style.BRIGHT + Fore.CYAN}# Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com
+      ----------------------------------------------------------------------------------------------------------------
       """)
 
 
-def check_proxy(proxy):
-    proxy_type = identify_proxy_type(proxy)
+def check_proxy(proxy, proxy_type):
     proxies = {proxy_type: proxy}
     try:
         start_time = time.time()
@@ -59,7 +61,7 @@ def check_proxy(proxy):
 
 def identify_proxy_type(proxy):
     if re.match(r'^https?://', proxy):
-        return 'https'
+        return 'http'
     elif re.match(r'^http://', proxy):
         return 'http'
     elif re.match(r'^socks5://', proxy):
@@ -76,26 +78,23 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
         if proxy_file_path:
             with open(proxy_file_path, 'r') as file:
                 proxies = file.readlines()
-            for i,proxy in enumerate(proxies):
-                if i == 3:
-                    if input(f"{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
-                     print(f"{Fore.YELLOW}Proxy checking terminated by user.")
-                     break
+            for i, proxy in enumerate(proxies):
                 proxy = proxy.strip()
                 if proxy:
-                    protocol_type = identify_proxy_type(proxy)
-                    status, latency = check_proxy(proxy)
+                    status, latency = check_proxy(proxy, identify_proxy_type(proxy))
                     if status:
-                        print(
-                            f"{Fore.GREEN}Proxy {proxy} is working, proxy type {protocol_type}. Latency: {latency:.2f} seconds.")
+                        print(f"{Fore.GREEN}Proxy {proxy} is working. Latency: {latency:.2f} seconds.")
                     else:
                         print(f"{Fore.RED}Proxy {proxy} is not working.")
+                if (i + 1) % 3 == 0:  # Every 3 proxies, ask to continue or terminate
+                    if input(f"{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
+                        print(f"{Fore.YELLOW}Proxy checking terminated by user.")
+                        break
         elif single_proxy:
             protocol_type = protocol if protocol else identify_proxy_type(single_proxy)
-            status, latency = check_proxy(single_proxy)
+            status, latency = check_proxy(single_proxy, protocol_type)
             if status:
-                print(
-                    f"{Fore.GREEN}Proxy {single_proxy} is working, proxy type {protocol_type}. Latency: {latency:.2f} seconds.")
+                print(f"{Fore.GREEN}Proxy {single_proxy} is working. Latency: {latency:.2f} seconds.")
             else:
                 print(f"{Fore.RED}Proxy {single_proxy} is not working.")
         else:
