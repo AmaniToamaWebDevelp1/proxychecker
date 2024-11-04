@@ -42,7 +42,8 @@ ____________ _______   ___   __  _____ _               _
  {Style.BRIGHT + Fore.CYAN}
 # Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com
  --------------------------------------------------------------------------
- {Fore.WHITE}Checking Proxy...\n
+ 
+ {Fore.WHITE}Checking Proxy... 
       """)
 
 
