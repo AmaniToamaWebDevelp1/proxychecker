@@ -37,6 +37,11 @@ To install this tool, you need to have Python 3.8 or above installed on your mac
     ```sh
     pip install -r requirements.txt
     ```
+3. Install using apt for Linux:
+   ```sh
+   sudo apt update
+   sudo apt install proxychecker
+   ```
 
 ## Usage
 
