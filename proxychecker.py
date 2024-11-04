@@ -28,21 +28,20 @@ def initialize():
 def print_banner():
     print(rf"""
       {Fore.LIGHTMAGENTA_EX}
-      **************************************************************************************************************
+************************************************************************
                      
-                        ____________ _______   ___   __  _____ _               _             
-                        | ___ \ ___ \  _  \ \ / | \ / / /  __ \ |             | |            
-                        | |_/ / |_/ / | | |\ V / \ V /  | /  \/ |__   ___  ___| | _____ _ __ 
-                        |  __/|    /| | | |/   \  \ /   | |   | '_ \ / _ \/ __| |/ / _ \ '__|
-                        | |   | |\ \\ \_/ / /^\ \ | |   | \__/\ | | |  __/ (__|   <  __/ |   
-                        \_|   \_| \_|\___/\/   \/ \_/    \____/_| |_|\___|\___|_|\_\___|_|   
+____________ _______   ___   __  _____ _               _             
+| ___ \ ___ \  _  \ \ / | \ / / /  __ \ |             | |            
+| |_/ / |_/ / | | |\ V / \ V /  | /  \/ |__   ___  ___| | _____ _ __ 
+|  __/|    /| | | |/   \  \ /   | |   | '_ \ / _ \/ __| |/ / _ \ '__|
+| |   | |\ \\ \_/ / /^\ \ | |   | \__/\ | | |  __/ (__|   <  __/ |   
+\_|   \_| \_|\___/\/   \/ \_/    \____/_| |_|\___|\___|_|\_\___|_|   
                                                                      
                                                                      
-
-                     
-      ***************************************************************************************************************
-                      {Style.BRIGHT + Fore.CYAN}# Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com
-      ----------------------------------------------------------------------------------------------------------------
+ *************************************************************************
+ {Style.BRIGHT + Fore.CYAN}
+# Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com
+ --------------------------------------------------------------------------
       """)
 
 
@@ -87,7 +86,7 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
                         print(f"{Fore.GREEN}Proxy {proxy} is working. Latency: {latency:.2f} seconds.")
                     else:
                         print(f"{Fore.RED}Proxy {proxy} is not working.")
-                if (i + 1) % 3 == 0:  # Every 3 proxies, ask to continue or terminate
+                if (i + 1) % 5 == 0:  # Every 3 proxies, ask to continue or terminate
                     if input(f"{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
                         print(f"{Fore.YELLOW}Proxy checking terminated by user.")
                         break
