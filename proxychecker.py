@@ -42,6 +42,7 @@ ____________ _______   ___   __  _____ _               _
  {Style.BRIGHT + Fore.CYAN}
 # Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com
  --------------------------------------------------------------------------
+ {Force.WHITE}Checking Proxy...\n
       """)
 
 
@@ -86,7 +87,7 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
                         print(f"{Fore.GREEN}Proxy {proxy} is working. Latency: {latency:.2f} seconds.")
                     else:
                         print(f"{Fore.RED}Proxy {proxy} is not working.")
-                if (i + 1) % 5 == 0:  # Every 3 proxies, ask to continue or terminate
+                if (i + 1) % 10 == 0:  # Every 3 proxies, ask to continue or terminate
                     if input(f"{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
                         print(f"{Fore.YELLOW}Proxy checking terminated by user.")
                         break
