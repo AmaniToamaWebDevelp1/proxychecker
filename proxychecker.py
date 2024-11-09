@@ -13,7 +13,7 @@ from requests.exceptions import ProxyError, ConnectTimeout
 from colorama import Fore, Style, init
 import sys
 import  signal
-
+init()
 
 def initialize():
     init(autoreset=True)
