@@ -117,7 +117,8 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
                 if (i + 1) % 10 == 0:  # Every 10 proxies, ask to continue or terminate
                     if input(f"{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
                         print(f"{Fore.YELLOW}Proxy checking terminated by user.")
-                        break
+                        break 
+                        sys.exit(0)
         elif single_proxy:
             protocol_type = protocol if protocol else identify_proxy_type(single_proxy)
             cntry = get_ip_country(extract_ip(single_proxy))
