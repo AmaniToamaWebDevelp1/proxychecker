@@ -57,6 +57,10 @@ Check proxies from a file:
 ```sh
 python proxychecker.py -t path/to/proxyfile.txt
 ```
+Check proxies from URL:
+```sh
+python proxychecker.py -u https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt
+```
 
 Check a single proxy:
 ```sh
