@@ -24,6 +24,8 @@ def initialize():
     parser.add_argument('-p', '--protocol',
                         help="Protocol to use with the single proxy (e.g., socks4), if you don't know the protocol type none",
                         type=str, default="http")
+    group.add_argument('-u', '--url', help="Input an url the retrieve txt response containing proxies, one per line",
+                        type=str)
     args = parser.parse_args()
     return args
 
@@ -45,6 +47,7 @@ def print_banner():
  
 {Style.DIM}{Fore.CYAN}# Proxy Checker Tool by Amani Toama  amanitoama570@gmail.com
  --------------------------------------------------------------------------
+ {Style.BRIGHT}{Fore.WHITE}
  """)
 
 # extract ip func
@@ -89,13 +92,13 @@ def identify_proxy_type(proxy):
 
 print_banner()
 
-def main(proxy_file_path=None, single_proxy=None, protocol=None):
+def main(proxy_file_path=None,proxy_url=None, single_proxy=None, protocol=None):
     signal.signal(signal.SIGINT, signal_handler)
     print(f"{Style.RESET_ALL}{Fore.WHITE}Checking Proxy... ")
     print(rf"""{Fore.YELLOW}
-   ___________________________________________________________________________________________
-                PROXY              |       Latency       |    Status    |      Country       
-  --------------------------------------------------------------------------------------------
+   ___________________________________________________________________________________________________________
+                PROXY              |       Latency       |    Status    |      Country    |    Protocol
+  ------------------------------------------------------------------------------------------------------------
                           """)
     try:
         if proxy_file_path:
@@ -105,15 +108,16 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
                 proxy = proxy.strip()
                 ip = extract_ip(proxy)
                 cntry = get_ip_country(ip)
+                proto = identify_proxy_type(proxy)
 
                 if proxy:
                     status, latency = check_proxy(proxy, identify_proxy_type(proxy))
                     if status:
                         print(
-                            f"{Fore.GREEN}  {proxy:^32} |     {latency:.2f}sec         |    {'True' if status else 'False':<9} | {cntry:^15}  ")
+                            f"{Fore.GREEN}  {proxy:^32} |     {latency:.2f}sec         |    {'True' if status else 'False':<9} | {cntry:^15} | {proto:^10} ")
                     else:
                         print(
-                            f"{Fore.RED}  {proxy:^32} | {'---':^17}   |    {'True' if status else 'False':<9} | {cntry:^15}  ")
+                            f"{Fore.RED}  {proxy:^32} | {'---':^17}   |    {'True' if status else 'False':<9} | {cntry:^15} | {proto:^10} ")
                 if (i + 1) % 10 == 0:  # Every 10 proxies, ask to continue or terminate
                     if input(f"\n{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
                         print(f"{Fore.YELLOW}Proxy checking terminated by user.")
@@ -122,15 +126,51 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
             protocol_type = protocol if protocol else identify_proxy_type(single_proxy)
             cntry = get_ip_country(extract_ip(single_proxy))
             status, latency = check_proxy(single_proxy, protocol_type)
+            proto = identify_proxy_type(single_proxy)
             if status:
-                print(f"{Fore.GREEN}Proxy {single_proxy} is working. Latency: {latency:.2f} seconds. Country: {cntry}")
+                print(
+                    f"{Fore.GREEN}  {single_proxy:^32} |     {latency:.2f}sec         |    {'True' if status else 'False':<9} | {cntry:^15} | {proto:^10} ")
             else:
                 print(
-                    f"{Fore.RED}  {single_proxy:^32} | {'---':^17}   |    {'True' if status else 'False':<9} | {cntry:^15}  ")
-        else:
-            print(f"{Fore.RED}Proxy {single_proxy} is not working.")
+                    f"{Fore.RED}  {single_proxy:^32} | {'---':^17}   |    {'True' if status else 'False':<9} | {cntry:^15} | {proto:^10}  ")
+        elif proxy_url:
+            try:
+                res = requests.get(proxy_url)
+                if res.status_code == 200:
+                    data = res.text.splitlines()
+                    proxies = data
+                    for i, proxy in enumerate(proxies):
+                        proxy = proxy.strip()
+                        ip = extract_ip(proxy)
+                        cntry = get_ip_country(ip)
+                        proto = identify_proxy_type(proxy)
+                        if proxy:
+                            status, latency = check_proxy(proxy, identify_proxy_type(proxy))
+                            if status:
+                                print(
+                                    f"{Fore.GREEN}  {proxy:^32} |     {latency:.2f}sec         |    {'True' if status else 'False':<9} | {cntry:^15} | {proto:^10} ")
+                            else:
+                                print(
+                                    f"{Fore.RED}  {proxy:^32} | {'---':^17}   |    {'True' if status else 'False':<9} | {cntry:^15} | {proto:^10} ")
+                        if (i + 1) % 15 == 0:  # Every 15 proxies, ask to continue or terminate
+                            if input(f"\n{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
+                                print(f"{Fore.YELLOW}Proxy checking terminated by user.")
+                                break
+            except requests.exceptions.RequestException as e:
+                print(f"{Fore.RED}Network error occurred: {str(e)}")
+
+
+
+
+
+
+
+
+
+
     except FileNotFoundError:
         print(f"{Fore.RED}File {proxy_file_path} not found.")
+
 
     # try:
     #     while True:
@@ -149,4 +189,6 @@ if __name__ == "__main__":
         main(single_proxy=args.single, protocol=args.protocol)
     elif args.txt:
         main(proxy_file_path=args.txt)
+    elif args.url:
+        main(proxy_url=args.url)
 
