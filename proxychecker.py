@@ -99,7 +99,7 @@ def main(proxy_file_path=None,proxy_url=None, single_proxy=None, protocol=None):
    ___________________________________________________________________________________________________________
                 PROXY              |       Latency       |    Status    |      Country    |    Protocol
   ------------------------------------------------------------------------------------------------------------
-                          """)
+                        """)
     try:
         if proxy_file_path:
             with open(proxy_file_path, 'r') as file:
