@@ -10,7 +10,7 @@ import time
 import re
 import argparse
 from requests.exceptions import ProxyError, ConnectTimeout
-from colorama import Fore, Style, init
+from colorama import  init, Fore, Style
 import sys
 import  signal
 init()
@@ -115,10 +115,9 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
                         print(
                             f"{Fore.RED}  {proxy:^32} | {'---':^17}   |    {'True' if status else 'False':<9} | {cntry:^15}  ")
                 if (i + 1) % 10 == 0:  # Every 10 proxies, ask to continue or terminate
-                    if input(f"{Fore.BLUE}Press 'q' to quit or any other key to continue: ").lower() == 'q':
-                        print(f"{Fore.YELLOW}Proxy checking terminated by user.")
+                    if input(f"\nPress 'q' to quit or any other key to continue: ").lower() == 'q':
+                        print(f"Proxy checking terminated by user.")
                         break 
-                        sys.exit(0)
         elif single_proxy:
             protocol_type = protocol if protocol else identify_proxy_type(single_proxy)
             cntry = get_ip_country(extract_ip(single_proxy))
