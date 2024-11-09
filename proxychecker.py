@@ -132,13 +132,13 @@ def main(proxy_file_path=None, single_proxy=None, protocol=None):
     except FileNotFoundError:
         print(f"{Fore.RED}File {proxy_file_path} not found.")
 
-    try:
-        while True:
-            pass
-    except KeyboardInterrupt:
-        # Catch KeyboardInterrupt to ensure the program exits gracefully
-        print('\nExiting due to Ctrl+C')
-        sys.exit(0)
+    # try:
+    #     while True:
+    #         pass
+    # except KeyboardInterrupt:
+    #     # Catch KeyboardInterrupt to ensure the program exits gracefully
+    #     print('\nExiting due to Ctrl+C')
+    #     sys.exit(0)
 
 
 if __name__ == "__main__":
