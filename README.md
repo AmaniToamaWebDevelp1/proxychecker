@@ -50,6 +50,7 @@ To install this tool, you need to have Python 3.8 or above installed on your mac
 - `-t`, `--txt`: Path to a text file containing proxy URLs, one per line.
 - `-s`, `--single`: A single proxy URL to be checked immediately.
 - `-p`, `--protocol`: Protocol to use with the single proxy (e.g., socks4), if not specified, it will be auto-detected.
+- `-u`, `--url`: URL retrieve data as a text contains proxies per one line.
 
 ### Running the Tool
 
@@ -61,6 +62,7 @@ Check proxies from URL:
 ```sh
 python proxychecker.py -u https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt
 ```
+@SpeedX
 
 Check a single proxy:
 ```sh
