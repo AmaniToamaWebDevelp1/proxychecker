@@ -62,7 +62,7 @@ Check proxies from URL:
 ```sh
 python proxychecker.py -u https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt
 ```
-@SpeedX
+
 
 Check a single proxy:
 ```sh
